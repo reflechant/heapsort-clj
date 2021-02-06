@@ -1,9 +1,9 @@
 (ns heap.core)
 
 (defn swap [coll a b]
-  (let [x (nth coll a)
-        y (nth coll b)]
-    (assoc coll a y b x)))
+  (assoc coll
+         a (nth coll b)
+         b (nth coll a)))
 
 (defn heapify [coll i]
   (let [left (inc (* 2 i))
@@ -22,7 +22,7 @@
          coll coll]
     (if (neg? i)
       coll
-      (recur (dec i) (heapify coll i))))) 
+      (recur (dec i) (heapify coll i)))))
 
 (defn heapsort [coll]
   (let [h (heap coll)]
@@ -35,7 +35,3 @@
               right (subvec h i)]
           (recur (dec i)
                  (apply conj (heapify left 0) right)))))))
-
-(let [xs (repeatedly 10 (partial rand-int 10))]
-  (println xs)
-  (heapsort (vec xs)))
