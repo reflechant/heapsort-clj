@@ -6,7 +6,7 @@
          b (nth coll a)))
 
 (defn heapify [coll i]
-  (let [left (inc (* 2 i))
+  (let [left  (inc (* 2 i))
         right (inc left)
         nodes (->> [i left right]
                    (#(zipmap % (map (partial get coll) %)))
@@ -18,7 +18,7 @@
             (recur (swap coll i largest-index) largest-index))))))
 
 (defn heap [coll]
-  (loop [i (dec (quot (count coll) 2))
+  (loop [i    (dec (quot (count coll) 2))
          coll coll]
     (if (neg? i)
       coll
@@ -30,8 +30,8 @@
            h h]
       (if (neg? i)
         h
-        (let [h (swap h 0 i)
-              left (subvec h 0 i)
+        (let [h     (swap h 0 i)
+              left  (subvec h 0 i)
               right (subvec h i)]
           (recur (dec i)
                  (apply conj (heapify left 0) right)))))))
